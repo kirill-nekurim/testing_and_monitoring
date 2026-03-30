@@ -1,60 +1,62 @@
-from pydantic import BaseModel, Field
+from __future__ import annotations
+
+from typing import Optional
+
+from pydantic import BaseModel, ConfigDict, Field
 
 
 class PredictRequest(BaseModel):
-    age: int | None = Field(default=None, description='Возраст человека')
-    workclass: str | None = Field(default=None, description='Тип занятости')
-    fnlwgt: int | None = Field(
+    model_config = ConfigDict(populate_by_name=True)
+    age: Optional[int] = Field(default=None, description='Возраст человека')
+    workclass: Optional[str] = Field(default=None, description='Тип занятости')
+    fnlwgt: Optional[int] = Field(
         default=None,
         description='Вес наблюдения в данных переписи',
     )
-    education: str | None = Field(default=None, description='Образование')
-    education_num: int | None = Field(
+    education: Optional[str] = Field(default=None, description='Образование')
+    education_num: Optional[int] = Field(
         default=None,
         alias='education.num',
         description='Уровень образования в виде числа',
     )
-    marital_status: str | None = Field(
+    marital_status: Optional[str] = Field(
         default=None,
         alias='marital.status',
         description='Семейное положение',
     )
-    occupation: str | None = Field(
+    occupation: Optional[str] = Field(
         default=None,
         description='Профессия / род деятельности',
     )
-    relationship: str | None = Field(
+    relationship: Optional[str] = Field(
         default=None,
         description='Роль человека в семье',
     )
-    race: str | None = Field(default=None, description='Расовая группа')
-    sex: str | None = Field(
+    race: Optional[str] = Field(default=None, description='Расовая группа')
+    sex: Optional[str] = Field(
         default=None,
         description='Пол человека (Male / Female)',
     )
-    capital_gain: int | None = Field(
+    capital_gain: Optional[int] = Field(
         default=None,
         alias='capital.gain',
         description='Доход от капитала (прибыль от продажи активов)',
     )
-    capital_loss: int | None = Field(
+    capital_loss: Optional[int] = Field(
         default=None,
         alias='capital.loss',
         description='Убытки от капитала',
     )
-    hours_per_week: int | None = Field(
+    hours_per_week: Optional[int] = Field(
         default=None,
         alias='hours.per.week',
         description='Количество рабочих часов в неделю',
     )
-    native_country: str | None = Field(
+    native_country: Optional[str] = Field(
         default=None,
         alias='native.country',
         description='Страна происхождения',
     )
-
-    class Config:
-        allow_population_by_field_name = True
 
 
 class PredictResponse(BaseModel):
@@ -63,9 +65,8 @@ class PredictResponse(BaseModel):
 
 
 class UpdateModelRequest(BaseModel):
-    run_id: str = Field(description='MLflow run_id')
+    run_id: str = Field(min_length=1, description='MLflow run_id')
 
 
 class UpdateModelResponse(BaseModel):
     run_id: str = Field(description='MLflow run_id')
-
