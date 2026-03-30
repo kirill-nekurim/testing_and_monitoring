@@ -1,2 +1,3 @@
 __pycache__
-grafana/*.json
+!grafana/ml-service-dashboard.json
+grafana/ALERTING.md

@@ -34,7 +34,16 @@ docker compose up --build
 
 ## Тесты
 
+С корнем проекта в `PYTHONPATH` (см. `pytest.ini`):
+
 ```bash
 pip install -r requirements.txt
 pytest -q
+```
+
+Без локального `pip` — через тот же образ, что и сервис:
+
+```bash
+docker compose build
+docker compose run --rm mlflow_example pytest -q
 ```

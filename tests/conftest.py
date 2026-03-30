@@ -8,7 +8,8 @@ from sklearn.dummy import DummyClassifier
 from sklearn.pipeline import Pipeline
 
 os.environ.setdefault('MLFLOW_TRACKING_URI', 'http://127.0.0.1:5000/')
-os.environ.setdefault('DEFAULT_RUN_ID', 'test-run')
+# Docker / shell may set DEFAULT_RUN_ID; tests expect a fixed id for /health.
+os.environ['DEFAULT_RUN_ID'] = 'test-run'
 
 
 def _build_dummy_pipeline() -> Pipeline:
